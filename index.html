@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rock Paper Scissors</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #000;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      justify-content: center;
+      padding: 2vh 2vw;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin: 1vh 0;
+    }
+
+    .heading{
+      margin-bottom: 30px;
+    }
+
+    .mainPanel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 1200px;
+      background-color: rgb(0, 69, 99);
+      border-radius: 8px;
+      padding: 50px;
+    }
+
+    .inputPanel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5vw;
+      margin: 2vh 0;
+      margin-bottom: 50px;
+    }
+
+    button {
+      min-width: 150px;
+      height: 60px;
+      margin: 5px;
+      background-color: antiquewhite;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      opacity: 0.75;
+    }
+
+    .output {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 5vw;
+      width: 100%;
+      margin-top: 3vh;
+    }
+
+    .outputPanel {
+      display: flex;
+      gap: 3vw;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .playerOutput, .computerOutput {
+      text-align: center;
+    }
+
+    #i_image, #o_image {
+      width: 200px;
+      height: auto;
+      max-height: 200px;
+      margin-top: 1vh;
+    }
+
+    .scoreCard {
+      display: grid;
+      gap: 1vh;
+      justify-content: center;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      button {
+        width: 100px;
+        height: 50px;
+        font-size: 1rem;
+      }
+
+      #i_image, #o_image {
+        width: 120px;
+        max-height: 120px;
+      }
+
+      .output {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .mainPanel {
+        padding: 0px;
+        padding-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="heading">
+    <h1>ROCK PAPER SCISSOR</h1>
+    <h2>Test your LUCK!</h2>
+  </div>
+
+  <div class="mainPanel">
+    <div class="inputPanel">
+      <button onclick="
+        u_result = 'ROCK';
+        i_image.src = 'rock.png';
+
+        // Show loader image in o_image
+        o_image.src = 'loader.gif';
+
+        
+          setTimeout(() => {
+            computerMove();
+            scoreCard();
+          }, 2000);
+        ">
+          ROCK
+      </button>
+
+      <button onclick="
+        u_result = 'PAPER';
+        i_image.src = 'paper.png';
+
+        // Show loader image in o_image
+        o_image.src = 'loader.gif';
+
+        
+          setTimeout(() => {
+            computerMove();
+            scoreCard();
+          }, 2000);
+        ">
+          PAPER
+      </button>
+
+      <button onclick="
+        u_result = 'SCISSOR';
+        i_image.src = 'scissor.png';
+
+        // Show loader image in o_image
+        o_image.src = 'loader.gif';
+
+        
+          setTimeout(() => {
+            computerMove();
+            scoreCard();
+          }, 2000);
+        ">
+          SCISSOR
+      </button>
+
+      <button onclick="
+        o_image.src = 'loader.gif';
+        i_image.src = 'loader.gif';
+        setTimeout(() => {
+          u_result = '';
+          c_result = '';
+          u_score = 0;
+          c_score = 0;
+          draw = 0;
+          i_image.src = 'rock.png';
+          o_image.src = 'rock.png';
+          document.getElementById('userScore').textContent = `User Score: ${u_score}`;
+          document.getElementById('computerScore').textContent = `Computer Score: ${c_score}`;
+          document.getElementById('drawScore').textContent = `Draw: ${draw}`;
+        }, 2000);
+      ">RESET GAME</button>
+    </div>
+
+    <div class="output">
+      <div class="outputPanel">
+        <div class="playerOutput">
+          <h3>USER</h3>
+          <img src="rock.png" id="i_image" />
+        </div>
+        <div class="computerOutput">
+          <h3>COMPUTER</h3>
+          <img src="rock.png" id="o_image" />
+        </div>
+      </div>
+
+      <div class="scoreCard">
+        <h2 id="userScore">User Score: 0</h2>
+        <h2 id="computerScore">Computer Score: 0</h2>
+        <h2 id="drawScore">Draw: 0</h2>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let u_result = '';
+    let c_result = '';
+    let u_score = 0;
+    let c_score = 0;
+    let draw = 0;
+
+    function computerMove() {
+      const rand = Math.random();
+
+      if (rand <= 0.33) {
+        c_result = 'ROCK';
+        o_image.src = 'rock.png';
+      } else if (rand <= 0.66) {
+        c_result = 'PAPER';
+        o_image.src = 'paper.png';
+      } else {
+        c_result = 'SCISSOR';
+        o_image.src = 'scissor.png';
+      }
+    }
+
+    function scoreCard() {
+      if (u_result === c_result) {
+        draw++;
+      } else if (
+        (u_result === 'ROCK' && c_result === 'SCISSOR') ||
+        (u_result === 'PAPER' && c_result === 'ROCK') ||
+        (u_result === 'SCISSOR' && c_result === 'PAPER')
+      ) {
+        u_score++;
+      } else {
+        c_score++;
+      }
+
+      document.getElementById('userScore').textContent = `User Score: ${u_score}`;
+      document.getElementById('computerScore').textContent = `Computer Score: ${c_score}`;
+      document.getElementById('drawScore').textContent = `Draw: ${draw}`;
+    }
+  </script>
+</body>
+</html>
